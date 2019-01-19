@@ -14,6 +14,13 @@ $color-grey-dark-2: #6D5D4B;
 $font-primary: 'Nunito', sans-serif;
 $font-display: 'Josefin Sans', sans-serif;
 
+// Responsive breakpoints
+$bp-largest: 75em; //1200px (decrease overall fontsize)
+$bp-large: 62.5em; //1000px (move sidebar to top)
+$bp-medium: 50em; //800px (move realtors below header, move images below story)
+$bp-small: 37.5em; //600px (realtors back to column layout)
+$bp-smallest: 34.375em; //550
+
 *,
 *::before,
 *::after {
@@ -25,6 +32,10 @@ $font-display: 'Josefin Sans', sans-serif;
 html {
     box-sizing: border-box;
     font-size: 62.5%; //1rem = 16px
+
+    @media only screen and (max-width: $bp-largest) {
+        font-size: 50%;
+    }
 }
 
 body {
@@ -50,4 +61,33 @@ body {
         [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) 
         [center-end] minmax(6rem, 1fr)
         [full-end];
+
+    @media only screen and (max-width: $bp-large) {
+        //add row to beginning for menu bar
+        grid-template-rows: 6rem 80vh min-content 40vw repeat(3, min-content);
+        grid-template-columns: 
+            //remove sidebar column
+            [full-start] minmax(6rem, 1fr) 
+            [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) 
+            [center-end] minmax(6rem, 1fr)
+            [full-end];
+    }
+
+    @media only screen and (max-width: $bp-medium) {
+        //add row to beginning for menu bar
+        // grid-template-rows: 
+        //     6rem //sidebar
+        //     calc(100vh - 6rem) //header -- accound for 6rem tall menu bar
+        //     min-content //realtors
+        //     min-content 
+        //     min-content //story
+        //     repeat(3, min-content);
+
+            //can be shortened to: 
+            grid-template-rows: 
+                6rem //sidebar
+                calc(100vh - 6rem); //header -- accound for 6rem tall menu bar
+            //the grid layout algorithm with automatically size the remaining rows to min-content so there is no need to set them explicitly
+
+    }
 }

@@ -8,10 +8,20 @@
     padding-top: 4rem;
 
     display: grid;
-    grid-template-rows: 1fr min-content 6rem 1fr;
-    grid-template-columns: max-content;
+    //setting row to minmax(6rem, min-content) allows the row height to expand when screen width decreases, but never less than 60px
+    grid-template-rows: 1fr min-content minmax(6rem, min-content) 1fr;
+    grid-template-columns: minmax(min-content, max-content);
     grid-row-gap: 1.5rem;
     justify-content: center; //cebter child grid horizontally
+
+    @media only screen and (max-width: $bp-medium) {
+        //make header span width
+        grid-column: 1 / -1;
+    }
+
+    @media only screen and (max-width: $bp-small) {
+        padding: 5rem;
+    }
 
 
     &__logo {
@@ -47,9 +57,13 @@
         grid-template-columns: repeat(4, 1fr);
         grid-column-gap: 3rem;
         justify-items: center;
+        align-items: center;
 
         img {
-            height: 2.5rem;
+            //allows image to scale down
+            max-height: 2.5rem;
+            max-width: 100%;
+
             filter: brightness(70%); //make logos darker
         }
     }
